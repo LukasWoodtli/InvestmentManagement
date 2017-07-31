@@ -1,0 +1,19 @@
+language: python
+python:
+  - "2.7"
+  
+install:
+ - pip install pylint
+ - pip install coverage
+ - pip install coveralls
+# - pip install sphinx
+# - pip install sphinxcontrib-napoleon
+
+script: 
+ - python -m unittest discover . -p *test*.py
+ - pylint -d wrong-import-position,wrong-import-order PyMarkdownGen
+ - coverage run --branch -m unittest discover . -p *test*.py
+ - coverage report -m
+
+after_success:
+ - coveralls
